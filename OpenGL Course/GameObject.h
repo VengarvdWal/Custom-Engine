@@ -16,6 +16,7 @@ public:
 	Transform transform; 
 	
 	GameObject(std::string modelPath);
+	GameObject(std::string modelPath, Vector3 position);
 
 	~GameObject();
 

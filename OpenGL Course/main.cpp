@@ -10,10 +10,6 @@ Model ant;
 
 Game game(&mainWindow);
 
-//void RenderScene()
-//{
-
-//}
 
 int main()
 { 
@@ -22,12 +18,9 @@ int main()
 
 	game.Init();
 
-	game.Run();
+	game.Run();	
 
-	/*ant = Model();
-	ant.LoadModel("Models/ant.obj");		
-
-	const float timeStep = 1.0f / 60.0f;*/
+	//const float timeStep = 1.0f / 60.0f;*/
 
 	return 0;
 }
