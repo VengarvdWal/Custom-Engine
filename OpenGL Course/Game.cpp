@@ -8,10 +8,8 @@
 void Game::CreateShaders()
 {
 	objectShader = Shader();
-	objectShader.CreateFromFiles("Shaders/shader.vert", "Shaders/shader.frag");
-	//shaderList.push_back(&shader1);
+	objectShader.CreateFromFiles("Shaders/shader.vert", "Shaders/shader.frag");	//shaderList.push_back(&shader1);
 	
-
 	directionalShadowShader = Shader();
 	directionalShadowShader.CreateFromFiles("Shaders/directional_shadow_map.vert", "Shaders/directional_shadow_map.frag");
 	omniShadowShader = Shader();

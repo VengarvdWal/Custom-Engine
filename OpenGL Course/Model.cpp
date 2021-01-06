@@ -1,20 +1,22 @@
 #include "Model.h"
+#include <iostream>
 
 Model::Model()
 {
 }
 
 void Model::RenderModel()
-{
+{	
+	std::cout << "Meshlist size " << meshList.size() << std::endl;
 	for (size_t i = 0; i < meshList.size(); i++)
 	{
 		unsigned int materialIndex = meshToTex[i];
-
+		
 		if (materialIndex < textureList.size() && textureList[materialIndex])
 		{
 			textureList[materialIndex]->UseTexture();
 		}
-
+		
 		meshList[i]->RenderMesh();
 	}
 }
@@ -50,6 +52,7 @@ void Model::LoadNode(aiNode* node, const aiScene* scene)
 
 void Model::LoadMesh(aiMesh* mesh, const aiScene* scene)
 {
+	std::cout << "Loading Mesh " << std::endl;
 	std::vector<GLfloat> vertices;
 	std::vector<unsigned int> indices;
 
@@ -77,7 +80,7 @@ void Model::LoadMesh(aiMesh* mesh, const aiScene* scene)
 
 	Mesh* newMesh = new Mesh();
 	newMesh->CreateMesh(&vertices[0], &indices[0], vertices.size(), indices.size());
-	meshList.push_back(newMesh);
+	meshList.push_back(newMesh);	
 	meshToTex.push_back(mesh->mMaterialIndex);
 }
 

@@ -2,7 +2,7 @@
 
 GameObject::GameObject(std::string modelPath)
 {	
-	model.LoadModel(modelPath);		
+	matrix.LoadModel(modelPath);		
 }
 
 GameObject::~GameObject()
@@ -11,5 +11,5 @@ GameObject::~GameObject()
 
 void GameObject::render() 
 {
-	model.RenderModel();
+	matrix.RenderModel();
 }
