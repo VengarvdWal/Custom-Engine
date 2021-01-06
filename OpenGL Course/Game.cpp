@@ -7,9 +7,10 @@
 
 void Game::CreateShaders()
 {
-	Shader shader1;
-	shader1.CreateFromFiles(vShader, fShader);
-	shaderList.push_back(&shader1);
+	objectShader = Shader();
+	objectShader.CreateFromFiles("Shaders/shader.vert", "Shaders/shader.frag");
+	//shaderList.push_back(&shader1);
+	
 
 	directionalShadowShader = Shader();
 	directionalShadowShader.CreateFromFiles("Shaders/directional_shadow_map.vert", "Shaders/directional_shadow_map.frag");
@@ -117,33 +118,33 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 
 	skybox.DrawSkybox(viewMatrix, projectionMatrix);
 		
-	shaderList[0]->UseShader();
+	objectShader.UseShader();
 
-	uniformModel = shaderList[0]->GetModelLocation();
-	uniformProjection = shaderList[0]->GetProjectionLocation();
-	uniformView = shaderList[0]->GetViewLocation();
-	uniformEyePosition = shaderList[0]->GetEyePositionLocation();
-	uniformSpecularIntensity = shaderList[0]->GetSpecularIntensityLocation();
-	uniformShininess = shaderList[0]->GetShininessLocation();
+	uniformModel = objectShader.GetModelLocation();
+	uniformProjection = objectShader.GetProjectionLocation();
+	uniformView = objectShader.GetViewLocation();
+	uniformEyePosition = objectShader.GetEyePositionLocation();
+	uniformSpecularIntensity = objectShader.GetSpecularIntensityLocation();
+	uniformShininess = objectShader.GetShininessLocation();
 
 	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-	shaderList[0]->SetDirectionalLight(&mainLight);
-	shaderList[0]->SetPointLights(pointLights, pointLightCount, 3, 0);
-	shaderList[0]->SetSpotLights(spotLights, spotLightCount, 3 + pointLightCount, pointLightCount);
-	shaderList[0]->SetDirectionalLightTransform(&mainLight.CalculateLightTransform());
+	objectShader.SetDirectionalLight(&mainLight);
+	objectShader.SetPointLights(pointLights, pointLightCount, 3, 0);
+	objectShader.SetSpotLights(spotLights, spotLightCount, 3 + pointLightCount, pointLightCount);
+	objectShader.SetDirectionalLightTransform(&mainLight.CalculateLightTransform());
 
 	mainLight.GetShadowMap()->Read(GL_TEXTURE2);
-	shaderList[0]->SetTexture(1);
-	shaderList[0]->SetDirectionalShadowMap(2);
+	objectShader.SetTexture(1);
+	objectShader.SetDirectionalShadowMap(2);
 
 	glm::vec3 lowerLight = camera.getCameraPosition();
 	lowerLight.y -= 0.3f;
 	spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-	shaderList[0]->Validate();
+	objectShader.Validate();
 	//RenderScene();
 }
 

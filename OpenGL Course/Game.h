@@ -42,6 +42,7 @@ private:
     std::vector<Shader*> shaderList;
     Shader directionalShadowShader;
     Shader omniShadowShader;
+    Shader objectShader;
 
     GLfloat deltaTime = 0.0f;
     GLfloat lastTime = 0.0f;
