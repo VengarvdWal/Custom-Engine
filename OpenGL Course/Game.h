@@ -72,6 +72,8 @@ private:
     void OmniShadowMapPass(PointLight* light);
     void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
     void AddGameObject(GameObject* entity);
+    //Don't forget to remove memory of gameObject
+    void RemoveGameObject();
 
 public:
     //Game receives the window to be able to check for window closing and events on the loop.

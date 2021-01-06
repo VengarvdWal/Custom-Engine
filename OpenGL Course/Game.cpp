@@ -55,9 +55,9 @@ void Game::Init()
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
 
 	skybox = Skybox(skyboxFaces);
-	GameObject ant("Models/ant.obj");
+	//GameObject ant("Models/ant.obj");
 
-	AddGameObject(&ant);
+	AddGameObject(new GameObject("Models/ant.obj"));
 
 	CreateShaders();
 }
@@ -162,6 +162,11 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 void Game::AddGameObject(GameObject* go)
 {
 	gameObjects.push_back(go);
+}
+
+void Game::RemoveGameObject()
+{
+	//Don't forget to remove memory of gameObject
 }
 
 void Game::Run()

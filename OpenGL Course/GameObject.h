@@ -9,7 +9,7 @@ class GameObject
 {
 protected:
 
-	Model matrix;
+	Model model;
 
 public:
 	//Keeping the transform public since it will be changed all the time from many different places.
