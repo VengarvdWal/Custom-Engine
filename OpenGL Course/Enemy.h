@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
+#include "Character.h"
 class Enemy :
-	public Entity
+	public Character
 {
 public:
 
-	Enemy();
-	Enemy(int FOV, int mHealth, int mDamage, int mSpeed);
+	Enemy(std::string modelPath);
+	Enemy(std::string modelPath, int FOV, int mHealth, int mDamage, int mSpeed); 
 
 	~Enemy();
 

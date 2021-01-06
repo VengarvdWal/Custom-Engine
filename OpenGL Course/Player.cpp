@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(std::string modelPath) : Character(modelPath)
 {
 	mHealth = 0;
 	mDamage = 0;
@@ -10,7 +10,7 @@ Player::Player()
 	mCargoLimit = 0;
 }
 
-Player::Player(int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP)
+Player::Player(std::string modelPath, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath)
 {
 	this->mHealth = mHealth;
 	this->mDamage = mDamage;

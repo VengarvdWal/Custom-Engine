@@ -41,6 +41,7 @@ public:
 	GLuint GetEyePositionLocation();
 	GLuint GetOmniLightPosLocation();
 	GLuint GetFarPlaneLocation();
+	GLuint shaderID;
 
 	void SetDirectionalLight(DirectionalLight* dLight);
 	void SetPointLights(PointLight* pLight, unsigned int lightCount, unsigned int textureUnit, unsigned int offset);
@@ -60,7 +61,7 @@ private:
 	int pointLightCount;
 	int spotLightCount;
 
-	GLuint shaderID, uniformProjection, uniformModel, uniformView, uniformEyePosition,
+	GLuint uniformProjection, uniformModel, uniformView, uniformEyePosition,
 		uniformSpecularIntensity, uniformShininess,
 		uniformTexture,
 		uniformDirectionalLightTransform, uniformDirectionalShadowMap,

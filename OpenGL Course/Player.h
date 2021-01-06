@@ -1,11 +1,11 @@
 #pragma once
-#include "Entity.h"
+#include "Character.h"
 class Player :
-	public Entity
+	public Character
 {
 public:
-	Player();
-	Player(int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP);
+	Player(std::string modelPath);
+	Player(std::string modelPath, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP);
 
 	~Player();
 

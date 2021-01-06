@@ -1,11 +1,11 @@
 #include "Enemy.h"
 
-Enemy::Enemy() : Entity()
+Enemy::Enemy(std::string modelPath) : Character(modelPath)
 {
 	FOV = 60;
 }
 
-Enemy::Enemy(int FOV, int mHealth, int mDamage, int mSpeed) : Entity(mHealth, mDamage, mSpeed)
+Enemy::Enemy(std::string modelPath, int FOV, int mHealth, int mDamage, int mSpeed) : Character(modelPath, mHealth, mDamage, mSpeed)
 {
 	this->FOV = FOV;
 }
