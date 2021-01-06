@@ -1,10 +1,9 @@
 #include "GLWindow.h"
 
-
 GLWindow::GLWindow()
 {
 	width = 800;
-	height = 600;	
+	height = 600;
 
 	for (size_t i = 0; i < 1024; i++)
 	{
@@ -19,7 +18,7 @@ GLWindow::GLWindow(GLint windowWidth, GLint windowHeight)
 {
 	width = windowWidth;
 	height = windowHeight;
-	
+
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -87,7 +86,6 @@ int GLWindow::Initialise()
 	glViewport(0, 0, bufferWidth, bufferHeight);
 
 	glfwSetWindowUserPointer(mainWindow, this);
-
 }
 
 void GLWindow::createCallBack()
@@ -110,8 +108,6 @@ GLfloat GLWindow::getYChange()
 	return theChange;
 }
 
-
-
 void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
 {
 	GLWindow* currentWindow = static_cast<GLWindow*>(glfwGetWindowUserPointer(window));
@@ -132,7 +128,6 @@ void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int
 			currentWindow->keys[key] = false;
 		}
 	}
-	
 }
 
 void GLWindow::handleMouse(GLFWwindow* window, double xPos, double yPos)
@@ -151,7 +146,6 @@ void GLWindow::handleMouse(GLFWwindow* window, double xPos, double yPos)
 
 	currentWindow->lastX = xPos;
 	currentWindow->lastY = yPos;
-		
 }
 
 GLWindow::~GLWindow()
