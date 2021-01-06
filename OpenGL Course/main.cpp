@@ -280,16 +280,6 @@ void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 
 int main()
 {
-	PhysicsCommon physicsCommon;
-
-	PhysicsWorld* world = physicsCommon.createPhysicsWorld();
-	world->setIsDebugRenderingEnabled(true);
-	DebugRenderer& debugRenderer = world->getDebugRenderer();
-
-	debugRenderer.setIsDebugItemDisplayed(DebugRenderer::DebugItem::COLLISION_SHAPE, true);
-	debugRenderer.setIsDebugItemDisplayed(DebugRenderer::DebugItem::COLLIDER_AABB, true);
-	//
-	SphereShape* sphereShape = physicsCommon.createSphereShape(1.0f);
 
 	mainWindow = GLWindow(1366, 768); // 1280, 1024 or 1024, 768
 	mainWindow.Initialise();
@@ -364,25 +354,7 @@ int main()
 	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
 	const float timeStep = 1.0f / 60.0f;
-
-	Vector3 position(0.0, 5.0f, 0.0f);
-	Quaternion orientation = Quaternion::identity();
-	Transform transform(position, orientation);
-
-	RigidBody* body = world->createRigidBody(transform);
-
-	BoxShape* shape = physicsCommon.createBoxShape(Vector3(2.0, 1.0, 0.5));
-	body->addCollider(shape, Transform::identity());
-
-	Vector3 fPosition(0.0, 0.0f, 0.0f);
-	Quaternion fOrientation = Quaternion::identity();
-	Transform fTransform(fPosition, fOrientation);
-
-	RigidBody* fBody = world->createRigidBody(fTransform);
-
-	BoxShape* fShape = physicsCommon.createBoxShape(Vector3(5.0, 0.0, 5.0));
-	fBody->addCollider(fShape, Transform::identity());
-	fBody->setType(BodyType::KINEMATIC);
+	
 
 	// Loop until window closed
 	while (!mainWindow.getShouldClose())
@@ -390,27 +362,6 @@ int main()
 		GLfloat now = glfwGetTime();
 		deltaTime = now - lastTime;
 		lastTime = now;
-
-		accumulator += deltaTime;
-		while (accumulator >= timeStep)
-		{
-			world->update(timeStep);
-
-			accumulator -= timeStep;
-		}
-
-		/*GLfloat factor = accumulator / timeStep;
-		Transform currTransform = body->getTransform();
-		Transform prevTransform;
-		Transform interpolatedTransform = Transform::interpolateTransforms(prevTransform, currTransform, factor);
-
-		prevTransform = currTransform;
-
-		CapsuleShape* capsuleShape = physicsCommon.createCapsuleShape(2.0f, 5.0f);
-		Transform colTransform = Transform::identity();
-
-		Collider* collider;
-		collider = body->addCollider(capsuleShape, colTransform);*/
 
 		// Get + Handle User Input
 		glfwPollEvents();
