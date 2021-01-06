@@ -52,7 +52,7 @@ Texture plainTexture;
 RenderMaterial shinyMaterial;
 RenderMaterial dullMaterial;
 
-Model ant;
+Model model;
 
 DirectionalLight mainLight;
 PointLight pointLights[MAX_POINT_LIGHTS];
@@ -163,38 +163,16 @@ void CreateShaders()
 
 void RenderScene()
 {
-	glm::mat4 model(1.0f);
-	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
-	////model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-	//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	//brickTexture.UseTexture();
-	//shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-	//meshList[0]->RenderMesh();
+	glm::mat4 matrix(1.0f);
 
-	//model = glm::mat4(1.0f);
-	//model = glm::translate(model, glm::vec3(0.0f, 4.0f, -2.5f));
-	////model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-	//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	//dirtTexture.UseTexture();
-	//dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-	//meshList[1]->RenderMesh();
-	
-
-	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+	matrix = glm::translate(matrix, glm::vec3(0.0f, -2.0f, 0.0f));
 	//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
 	plainTexture.UseTexture();
 	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 	meshList[2]->RenderMesh();
 
-	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-	//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-
-	ant.RenderModel();
+	
 }
 
 void DirectionalShadowMapPass(DirectionalLight* light)
@@ -309,8 +287,8 @@ int main()
 	shinyMaterial = RenderMaterial(1.0f, 32);
 	dullMaterial = RenderMaterial(0.3f, 4);
 
-	ant = Model();
-	ant.LoadModel("Models/ant.obj");
+	model = Model();
+	model.LoadModel("Models/ant.obj");
 
 	mainLight = DirectionalLight(2048, 2048,
 		1.0f, 1.0f, 1.0f,
