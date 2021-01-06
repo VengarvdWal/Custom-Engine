@@ -10,7 +10,6 @@ GameObject::~GameObject()
 }
 
 void GameObject::render() 
-{	
-	std::cout << "Rendering Model" << std::endl;
+{
 	model.RenderModel();
 }

@@ -77,7 +77,7 @@ void Game::DirectionalShadowMapPass(DirectionalLight* light)
 	directionalShadowShader.SetDirectionalLightTransform(&light->CalculateLightTransform());
 
 	directionalShadowShader.Validate();
-	//RenderScene();
+	RenderScene();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -100,7 +100,7 @@ void Game::OmniShadowMapPass(PointLight* light)
 	omniShadowShader.SetOmniLightMatrices(light->CalculateLightTransform());
 
 	omniShadowShader.Validate();
-	//RenderScene();
+	RenderScene();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -158,7 +158,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
 	objectShader.Validate();
-	//RenderScene();
+	RenderScene();
 }
 
 void Game::AddGameObject(GameObject* go)
