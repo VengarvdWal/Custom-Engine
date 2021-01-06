@@ -46,6 +46,8 @@ void Game::Init()
 	spotLights[1] = SpotLight(1024, 1024, 0.1f, 100.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.5f, 0.0f, -100.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 20.0f);
 	spotLightCount++;
 
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
@@ -55,7 +57,10 @@ void Game::Init()
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
 
 	skybox = Skybox(skyboxFaces);
-		
+	GameObject ant("Models/ant.obj");
+
+	AddGameObject(&ant);
+
 	CreateShaders();
 }
 
@@ -100,12 +105,20 @@ void Game::OmniShadowMapPass(PointLight* light)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Game::Render()
+
+void Game::RenderScene()
 {
-	for (int i = 0; i < gameObjects.size(); i++)
-	{
-		gameObjects[i]->render();
-	}
+	glm::mat4 matrix(1.0f);	
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{	
+		matrix = glm::mat4(1.0f);
+		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
+		//matrix = glm::translate(matrix, glm::vec3(0.0, 0.0, 0.0));
+		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
+		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		gameObjects[i]->render();		
+	}	
 }
 
 void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
@@ -148,10 +161,13 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	//RenderScene();
 }
 
-void Game::Run()
-{	
+void Game::AddGameObject(GameObject* go)
+{
+	gameObjects.push_back(go);
+}
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+void Game::Run()
+{		
 	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow->getBufferWidth() / mainWindow->getBufferHeight(), 0.1f, 100.0f);
 	while (!mainWindow->getShouldClose())
 	{

@@ -71,7 +71,7 @@ private:
     void DirectionalShadowMapPass(DirectionalLight* light);
     void OmniShadowMapPass(PointLight* light);
     void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
-    void AddEntity(GameObject* entity);
+    void AddGameObject(GameObject* entity);
 
 public:
     //Game receives the window to be able to check for window closing and events on the loop.
@@ -79,11 +79,7 @@ public:
 
     //This will be called before run and will initialize everything
     //like creating all objects, lights, etc. needed for the scene, setting up shaders etc...
-    void Init();
-
-    //Will do ALL the rendering for the game
-    //It should go throuh all entities and call their render methods.
-    void Render();
+    void Init();   
 
     //will be called in main and has the full game loop;
     //Inside the loop it will deal with the timing and call render();
