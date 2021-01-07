@@ -24,7 +24,7 @@ public:
 	void start() {};
 
 	//This is an empty function. Called each frame, to be overriden by the child classes. No need to put it on the CPP file
-	void update() {};
+	void update() { std::cout << "Update on GameObject called" << std::endl; };
 
 	//TODO: Call the rendermodel on model
 	void render();

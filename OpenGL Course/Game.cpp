@@ -59,7 +59,7 @@ void Game::Init()
 
 	AddGameObject(new GameObject("Models/Ground.obj", Vector3(0.0,0.0,0.0)));
 	AddGameObject(new GameObject("Models/Ant Hill.obj", Vector3(0.0, -5.0, 0.0)));
-	AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0, 5.0, 0.0)));
+	AddGameObject(new Player("Models/ant.obj", Vector3(5.0, 5.0, 0.0)));
 	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
 	
 	CreateShaders();
@@ -165,8 +165,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 
 void Game::AddGameObject(GameObject* go)
 {
-	gameObjects.push_back(go);
-	//std::cout << "Size : "<<gameObjects.size() << std::endl;
+	gameObjects.push_back(go);	
 }
 
 void Game::RemoveGameObject()
