@@ -6,7 +6,7 @@ GameObject::GameObject(std::string modelPath)
 }
 
 //TODO This doesn't work
-GameObject::GameObject(std::string modelPath, Vector3 position)
+GameObject::GameObject(std::string modelPath, Vector3 position) : GameObject(modelPath)
 {
 	//std::cout << "First postition " << transform.getPosition().x << " " << transform.getPosition().y << " " << transform.getPosition().z << std::endl;
 	transform = Transform(position, Quaternion::identity());

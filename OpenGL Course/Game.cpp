@@ -33,7 +33,7 @@ void Game::Init()
 	shinyMaterial = RenderMaterial(1.0f, 32);
 	dullMaterial = RenderMaterial(0.3f, 4);
 
-	mainLight = DirectionalLight(2048, 2048, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -15.0f, -10.0f);
+	mainLight = DirectionalLight(2048, 2048, 1.0f, 1.0f, 1.0f, 0.5f, 0.25f, 0.0f, -15.0f, -10.0f);
 	pointLights[0] = PointLight(1024, 1024,	0.1f, 100.0f, 0.0f, 1.0f, 0.0f,	0.0f, 0.4f, -2.0f, 2.0f, 0.0f, 0.3f, 0.01f, 0.01f);
 	pointLightCount++;
 	pointLights[1] = PointLight(1024, 1024,	0.1f, 100.0f, 0.0f, 0.0f, 1.0f,	0.0f, 0.4f,	2.0f, 2.0f, 0.0f, 0.3f, 0.01f, 0.01f);
@@ -57,8 +57,10 @@ void Game::Init()
 	skybox = Skybox(skyboxFaces);
 	//GameObject ant("Models/ant.obj");
 
-	//AddGameObject(new GameObject("Models/ant.obj"));
-	AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
+	AddGameObject(new GameObject("Models/Ground.obj", Vector3(0.0,0.0,0.0)));
+	AddGameObject(new GameObject("Models/Ant Hill.obj", Vector3(0.0, -5.0, 0.0)));
+	AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0, 5.0, 0.0)));
+	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
 	
 	CreateShaders();
 }
@@ -112,7 +114,7 @@ void Game::RenderScene()
 	{	
 		matrix = glm::mat4(1.0f);
 		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
-		//std::cout << "Render Position " << gameObjects[i]->transform.getPosition().x << " " << gameObjects[i]->transform.getPosition().y << " " << gameObjects[i]->transform.getPosition().z << std::endl;
+		//std::cout << "Render Position Object " << i << " " << gameObjects[i]->transform.getPosition().x << " " << gameObjects[i]->transform.getPosition().y << " " << gameObjects[i]->transform.getPosition().z << std::endl;
 		//matrix = glm::translate(matrix, glm::vec3(0.0, 0.0, 0.0));
 		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
@@ -164,6 +166,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 void Game::AddGameObject(GameObject* go)
 {
 	gameObjects.push_back(go);
+	//std::cout << "Size : "<<gameObjects.size() << std::endl;
 }
 
 void Game::RemoveGameObject()
@@ -173,7 +176,7 @@ void Game::RemoveGameObject()
 
 void Game::Run()
 {		
-	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow->getBufferWidth() / mainWindow->getBufferHeight(), 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow->getBufferWidth() / mainWindow->getBufferHeight(), 0.1f, 1000.0f);
 	while (!mainWindow->getShouldClose())
 	{
 
@@ -203,6 +206,8 @@ void Game::Run()
 			OmniShadowMapPass(&spotLights[i]);
 		}
 		RenderPass(projection, camera.calculateViewMatrix());
+
+		
 
 		glUseProgram(0);
 
