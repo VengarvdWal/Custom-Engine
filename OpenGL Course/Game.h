@@ -32,7 +32,7 @@ class Game {
 private:
     //TODO: Add all necessary variables here
     //This vector will hold all the games entities just like the hierarchy in Unity.
-    std::vector<shared_ptr<GameObject>> gameObjects;   
+    std::vector<std::shared_ptr<GameObject>> gameObjects;   
 
     GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
         uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
@@ -71,7 +71,7 @@ private:
     void DirectionalShadowMapPass(DirectionalLight* light);
     void OmniShadowMapPass(PointLight* light);
     void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
-    void AddGameObject(GameObject* entity);
+    void AddGameObject(std::shared_ptr<GameObject> entity);
     //Don't forget to remove memory of gameObject
     void RemoveGameObject();
 

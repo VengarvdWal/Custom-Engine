@@ -39,8 +39,7 @@ void Player::start()
 	
 }
 void Player::update() 
-{
-	std::cout << "Update on Player called" << std::endl;
-	transform.setPosition(Vector3(transform.getPosition().x + 0.1f, transform.getPosition().y, transform.getPosition().z));
+{	
+	transform.setPosition(Vector3(transform.getPosition().x + 0.001f, transform.getPosition().y, transform.getPosition().z));
 
 }

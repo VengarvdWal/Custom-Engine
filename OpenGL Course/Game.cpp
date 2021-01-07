@@ -57,9 +57,9 @@ void Game::Init()
 	skybox = Skybox(skyboxFaces);
 	//GameObject ant("Models/ant.obj");
 
-	AddGameObject(make_shared<GameObject>("Models/Ground.obj", Vector3(0.0,0.0,0.0)));
-	AddGameObject(make_shared<GameObject>("Models/Ant Hill.obj", Vector3(0.0, -5.0, 0.0)));
-	AddGameObject(make_shared<Player>("Models/ant.obj", Vector3(5.0, 5.0, 0.0)));
+	AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", Vector3(0.0,0.0,0.0)));
+	AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", Vector3(0.0, -5.0, 0.0)));
+	AddGameObject(std::make_shared<Player>("Models/ant.obj", Vector3(5.0, 5.0, 0.0)));
 	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
 	
 	CreateShaders();
@@ -163,7 +163,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	RenderScene();
 }
 
-void Game::AddGameObject(shared_ptr<GameObject> go)
+void Game::AddGameObject(std::shared_ptr<GameObject> go)
 {
 	gameObjects.push_back(go);	
 }

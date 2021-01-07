@@ -21,10 +21,10 @@ public:
 	~GameObject();
 
 	//This is an empty function. Called on creation, to be overriden by the child classes. No need to put it on the CPP file
-	void start() {};
+	virtual void start() {};
 
 	//This is an empty function. Called each frame, to be overriden by the child classes. No need to put it on the CPP file
-	void update() { std::cout << "Update on GameObject called" << std::endl; };
+	virtual void update() {};
 
 	//TODO: Call the rendermodel on model
 	void render();
