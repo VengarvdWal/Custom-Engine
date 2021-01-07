@@ -32,7 +32,7 @@ class Game {
 private:
     //TODO: Add all necessary variables here
     //This vector will hold all the games entities just like the hierarchy in Unity.
-    std::vector<GameObject*> gameObjects;   
+    std::vector<shared_ptr<GameObject>> gameObjects;   
 
     GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
         uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
