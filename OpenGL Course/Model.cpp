@@ -6,16 +6,16 @@ Model::Model()
 }
 
 void Model::RenderModel()
-{	
+{
 	for (size_t i = 0; i < meshList.size(); i++)
 	{
 		unsigned int materialIndex = meshToTex[i];
-		
+
 		if (materialIndex < textureList.size() && textureList[materialIndex])
 		{
 			textureList[materialIndex]->UseTexture();
 		}
-		
+
 		meshList[i]->RenderMesh();
 	}
 }
@@ -50,7 +50,7 @@ void Model::LoadNode(aiNode* node, const aiScene* scene)
 }
 
 void Model::LoadMesh(aiMesh* mesh, const aiScene* scene)
-{	
+{
 	std::vector<GLfloat> vertices;
 	std::vector<unsigned int> indices;
 
@@ -78,8 +78,8 @@ void Model::LoadMesh(aiMesh* mesh, const aiScene* scene)
 
 	Mesh* newMesh = new Mesh();
 	newMesh->CreateMesh(&vertices[0], &indices[0], vertices.size(), indices.size());
-	meshList.push_back(newMesh);	
-	meshToTex.push_back(mesh->mMaterialIndex);	
+	meshList.push_back(newMesh);
+	meshToTex.push_back(mesh->mMaterialIndex);
 }
 
 void Model::LoadMaterials(const aiScene* scene)
@@ -115,7 +115,7 @@ void Model::LoadMaterials(const aiScene* scene)
 
 		if (!textureList[i])
 		{
-			textureList[i] = new Texture("Textures/plain.png");
+			textureList[i] = new Texture("Textures/plain.png");		
 			textureList[i]->LoadTextureA();
 		}
 	}
@@ -140,7 +140,6 @@ void Model::ClearModel()
 			textureList[i] = nullptr;
 		}
 	}
-
 }
 
 Model::~Model()

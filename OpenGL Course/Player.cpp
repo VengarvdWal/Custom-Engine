@@ -20,6 +20,16 @@ Player::Player(std::string modelPath, Vector3 position) : Character(modelPath, p
 	mCargoLimit = 0;
 }
 
+Player::Player(std::string modelPath, Vector3 position, PhysicsCommon& physicsCommon, PhysicsWorld* world) : Character(modelPath, position, physicsCommon, world)
+{
+	mHealth = 0;
+	mDamage = 0;
+	mSpeed = 0;
+	mStamina = 0;
+	mXP = 0;
+	mCargoLimit = 0;
+}
+
 Player::Player(std::string modelPath, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath)
 {
 	this->mHealth = mHealth;
@@ -36,10 +46,19 @@ Player::~Player()
 
 void Player::start()
 {
+}
+void Player::update()
+{
+	transform.setPosition(Vector3(transform.getPosition().x + 0.001f, transform.getPosition().y, transform.getPosition().z));
 	
 }
-void Player::update() 
-{	
-	transform.setPosition(Vector3(transform.getPosition().x + 0.001f, transform.getPosition().y, transform.getPosition().z));
-
-}
+//
+//void Player::addToInventory(GameObject go)
+//{
+//	inventory.push_back(go);
+//}
+//
+//void Player::removeFromInventory(GameObject go)
+//{
+//	
+//}

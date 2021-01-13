@@ -25,65 +25,70 @@
 #include "Enemy.h"
 #include "Shaders.h"
 
-
 using namespace reactphysics3d;
 
 class Game {
 private:
-    //TODO: Add all necessary variables here
-    //This vector will hold all the games entities just like the hierarchy in Unity.
-    std::vector<std::shared_ptr<GameObject>> gameObjects;   
+	//TODO: Add all necessary variables here
+	//This vector will hold all the games entities just like the hierarchy in Unity.
+	std::vector<std::shared_ptr<GameObject>> gameObjects;
 
-    GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-        uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
+	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
+		uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
 
-    Camera camera;
+	Camera camera;
 
-    std::vector<Shader*> shaderList;
-    Shader directionalShadowShader;
-    Shader omniShadowShader;
-    Shader objectShader;
+	std::vector<Shader*> shaderList;
+	Shader directionalShadowShader;
+	Shader omniShadowShader;
+	Shader objectShader;
 
-    GLfloat deltaTime = 0.0f;
-    GLfloat lastTime = 0.0f;
-    GLfloat accumulator = 0.0f;
+	GLfloat deltaTime = 0.0f;
+	GLfloat lastTime = 0.0f;
+	GLfloat accumulator = 0.0f;
 
-    GLWindow* mainWindow;
+	GLWindow* mainWindow;
 
-    Texture brickTexture;
-    Texture dirtTexture;
-    Texture plainTexture;
+	Texture brickTexture;
+	Texture dirtTexture;
+	Texture plainTexture;
 
-    RenderMaterial shinyMaterial;
-    RenderMaterial dullMaterial;
+	RenderMaterial shinyMaterial;
+	RenderMaterial dullMaterial;
 
-    DirectionalLight mainLight;
-    PointLight pointLights[MAX_POINT_LIGHTS];
-    SpotLight spotLights[MAX_SPOT_LIGHTS];
+	DirectionalLight mainLight;
+	PointLight pointLights[MAX_POINT_LIGHTS];
+	SpotLight spotLights[MAX_SPOT_LIGHTS];
 
-    Skybox skybox;
+	Skybox skybox;
 
-    unsigned int pointLightCount = 0;
-    unsigned int spotLightCount = 0;
+	float factor;
 
-    void CreateShaders();
-    void RenderScene();
-    void DirectionalShadowMapPass(DirectionalLight* light);
-    void OmniShadowMapPass(PointLight* light);
-    void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
-    void AddGameObject(std::shared_ptr<GameObject> entity);
-    //Don't forget to remove memory of gameObject
-    void RemoveGameObject();
+	PhysicsCommon physicsCommon;
+	PhysicsWorld* world;
+
+
+	unsigned int pointLightCount = 0;
+	unsigned int spotLightCount = 0;
+
+	void CreateShaders();
+	void RenderScene();
+	void DirectionalShadowMapPass(DirectionalLight* light);
+	void OmniShadowMapPass(PointLight* light);
+	void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
+	void AddGameObject(std::shared_ptr<GameObject> entity);
+	//Don't forget to remove memory of gameObject
+	void RemoveGameObject();
 
 public:
-    //Game receives the window to be able to check for window closing and events on the loop.
-    Game(GLWindow* mainWindow);
+	//Game receives the window to be able to check for window closing and events on the loop.
+	Game(GLWindow* mainWindow);
 
-    //This will be called before run and will initialize everything
-    //like creating all objects, lights, etc. needed for the scene, setting up shaders etc...
-    void Init();   
+	//This will be called before run and will initialize everything
+	//like creating all objects, lights, etc. needed for the scene, setting up shaders etc...
+	void Init();
 
-    //will be called in main and has the full game loop;
-    //Inside the loop it will deal with the timing and call render();
-    void Run();
+	//will be called in main and has the full game loop;
+	//Inside the loop it will deal with the timing and call render();
+	void Run();
 };
