@@ -20,9 +20,9 @@ private:
 public:
 	//Keeping the transform public since it will be changed all the time from many different places.
 	
-	GameObject(std::string modelPath, PhysicsManager* physicsManager);
+	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType);
 
-	GameObject(std::string modelPath, PhysicsManager* physicsManager, Vector3 position);
+	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position);
 
 	~GameObject();
 

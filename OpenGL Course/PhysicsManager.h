@@ -11,6 +11,9 @@ private:
 public:
 
 	PhysicsManager();
+	~PhysicsManager();
+	//PhysicsManager(const PhysicsManager&) = delete;
+	//PhysicsManager& operator = (const PhysicsManager&) = delete;
 
 	void update(const float timeStep);
 	rp3d::RigidBody *createRigidBody(rp3d::Transform transform);

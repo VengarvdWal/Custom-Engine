@@ -21,7 +21,7 @@ Game::Game(GLWindow* mainWindow)
 
 void Game::Init()
 {
-	
+	physicsManager = std::make_unique<PhysicsManager>();
 
 	brickTexture = Texture("Textures/brick.png");
 	brickTexture.LoadTextureA();
@@ -57,10 +57,10 @@ void Game::Init()
 	skybox = Skybox(skyboxFaces);
 	
 
-	AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", Vector3(0.0, 5.5, 0.0)));
-	AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", Vector3(0.0, 5.5, 0.0)));
-	AddGameObject(std::make_shared<Player>("Models/ant.obj", Vector3(0.0, -0.35, 0.0), &physicsManager));
-	AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", Vector3(0.0, -0.35, 0.0), &physicsManager));
+	AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", physicsManager.get(), BodyType::STATIC,Vector3(0.0, 5.5, 0.0)));
+	AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
+	AddGameObject(std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC,Vector3(5.0, -0.35, 0.0)));
+	AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(0.0, -0.35, 0.0)));
 	//AddGameObject(std::make_shared<GameObject>("Models/Plantain.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
 	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
 
@@ -192,7 +192,7 @@ void Game::Run()
 		// one or several physics steps
 		while (accumulator >= timeStep) {
 			// Update the Dynamics world with a constant time step
-			physicsManager.update(timeStep);
+			physicsManager->update(timeStep);
 			// Decrease the accumulated time
 			accumulator -= timeStep;
 		}

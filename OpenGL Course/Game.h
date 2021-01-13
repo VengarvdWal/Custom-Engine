@@ -65,7 +65,7 @@ private:
 
 	float factor;
 
-	PhysicsManager physicsManager;
+	std::unique_ptr<PhysicsManager> physicsManager;
 
 
 	unsigned int pointLightCount = 0;

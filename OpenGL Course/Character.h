@@ -10,10 +10,10 @@ protected:
 
 public:
 	
-	Character(std::string modelPath, PhysicsManager* physicsManager);
+	Character(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType);
 
-	Character(std::string modelPath, PhysicsManager* physicsManager, Vector3 position);
+	Character(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType , Vector3 position);
 
-	Character(std::string modelPath, PhysicsManager* physicsManager, Vector3 position ,int mHealth, int mDamage, int mSpeed);
+	Character(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position ,int mHealth, int mDamage, int mSpeed);
 
 };

@@ -7,6 +7,10 @@ PhysicsManager::PhysicsManager()
 	world = common.createPhysicsWorld();
 }
 
+PhysicsManager::~PhysicsManager()
+{
+}
+
 void PhysicsManager::update(const float timeStep)
 {
 	world->update(timeStep);

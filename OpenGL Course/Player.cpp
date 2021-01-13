@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player(std::string modelPath, PhysicsManager* physicsManager) : Character(modelPath, physicsManager)
+Player::Player(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType) : Character(modelPath, physicsManager, bodyType)
 {
 	mHealth = 0;
 	mDamage = 0;
@@ -12,7 +12,7 @@ Player::Player(std::string modelPath, PhysicsManager* physicsManager) : Characte
 }
 
 
-Player::Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position) : Character(modelPath, physicsManager, position)
+Player::Player(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position) : Character(modelPath, physicsManager, bodyType, position)
 {
 	mHealth = 0;
 	mDamage = 0;
@@ -22,7 +22,7 @@ Player::Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 po
 	mCargoLimit = 0;
 }
 
-Player::Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath, physicsManager, position, mHealth, mDamage, mSpeed)
+Player::Player(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath, physicsManager, bodyType, position, mHealth, mDamage, mSpeed)
 {
 	this->mHealth = mHealth;
 	this->mDamage = mDamage;
