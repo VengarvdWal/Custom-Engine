@@ -5,10 +5,13 @@ class Enemy :
 {
 public:
 
-	Enemy(std::string modelPath);
-	Enemy(std::string modelPath, int FOV, int mHealth, int mDamage, int mSpeed);
-	Enemy(std::string modelPath, Vector3 position, PhysicsCommon& physicsCommon, PhysicsWorld* world);
+	Enemy(std::string modelPath, PhysicsManager* physicsManager);
+	
+	Enemy(std::string modelPath, PhysicsManager* physicsManager, Vector3 position);
 
+	Enemy(std::string modelPath, PhysicsManager* physicsManager, Vector3 position , int mHealth, int mDamage, int mSpeed, int FOV);
+
+	Enemy(const Enemy&) = delete;
 	~Enemy();
 
 protected:

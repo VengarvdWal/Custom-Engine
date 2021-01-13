@@ -24,6 +24,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Shaders.h"
+#include "PhysicsManager.h"
 
 using namespace reactphysics3d;
 
@@ -64,8 +65,7 @@ private:
 
 	float factor;
 
-	PhysicsCommon physicsCommon;
-	PhysicsWorld* world;
+	PhysicsManager physicsManager;
 
 
 	unsigned int pointLightCount = 0;

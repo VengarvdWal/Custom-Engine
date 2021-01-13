@@ -6,10 +6,13 @@ class Player :
 public:
 
 
-	Player(std::string modelPath);
-	Player(std::string modelPath, Vector3 position);
-	Player(std::string modelPath, Vector3 position, PhysicsCommon& physicsCommon, PhysicsWorld* world);
-	Player(std::string modelPath, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP);
+	Player(std::string modelPath, PhysicsManager* physicsManager);
+
+	Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position);
+
+	Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position , int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP);
+
+	//Player(const Player&) = delete;
 
 	~Player();
 

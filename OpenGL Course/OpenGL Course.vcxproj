@@ -166,6 +166,7 @@
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMaterial.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMaterial.h" />
     <ClInclude Include="Mesh.h" />

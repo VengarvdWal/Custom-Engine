@@ -21,7 +21,7 @@ Game::Game(GLWindow* mainWindow)
 
 void Game::Init()
 {
-	world = physicsCommon.createPhysicsWorld();
+	
 
 	brickTexture = Texture("Textures/brick.png");
 	brickTexture.LoadTextureA();
@@ -59,8 +59,8 @@ void Game::Init()
 
 	AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", Vector3(0.0, 5.5, 0.0)));
 	AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", Vector3(0.0, 5.5, 0.0)));
-	AddGameObject(std::make_shared<Player>("Models/ant.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
-	AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
+	AddGameObject(std::make_shared<Player>("Models/ant.obj", Vector3(0.0, -0.35, 0.0), &physicsManager));
+	AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", Vector3(0.0, -0.35, 0.0), &physicsManager));
 	//AddGameObject(std::make_shared<GameObject>("Models/Plantain.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
 	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
 
@@ -114,9 +114,9 @@ void Game::RenderScene()
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		matrix = glm::mat4(1.0f);
-		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
+		//matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
 		//std::cout << "Render Position Object " << i << " " << gameObjects[i]->transform.getPosition().x << " " << gameObjects[i]->transform.getPosition().y << " " << gameObjects[i]->transform.getPosition().z << std::endl;
-		//matrix = glm::translate(matrix, glm::vec3(0.0, 0.0, 0.0));
+		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->getTransform().getPosition().x, gameObjects[i]->getTransform().getPosition().y, gameObjects[i]->getTransform().getPosition().z));
 		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));
 		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
@@ -192,7 +192,7 @@ void Game::Run()
 		// one or several physics steps
 		while (accumulator >= timeStep) {
 			// Update the Dynamics world with a constant time step
-			world->update(timeStep);
+			physicsManager.update(timeStep);
 			// Decrease the accumulated time
 			accumulator -= timeStep;
 		}

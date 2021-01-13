@@ -1,6 +1,7 @@
 #include "Player.h"
 
-Player::Player(std::string modelPath) : Character(modelPath)
+
+Player::Player(std::string modelPath, PhysicsManager* physicsManager) : Character(modelPath, physicsManager)
 {
 	mHealth = 0;
 	mDamage = 0;
@@ -10,7 +11,8 @@ Player::Player(std::string modelPath) : Character(modelPath)
 	mCargoLimit = 0;
 }
 
-Player::Player(std::string modelPath, Vector3 position) : Character(modelPath, position)
+
+Player::Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position) : Character(modelPath, physicsManager, position)
 {
 	mHealth = 0;
 	mDamage = 0;
@@ -20,17 +22,7 @@ Player::Player(std::string modelPath, Vector3 position) : Character(modelPath, p
 	mCargoLimit = 0;
 }
 
-Player::Player(std::string modelPath, Vector3 position, PhysicsCommon& physicsCommon, PhysicsWorld* world) : Character(modelPath, position, physicsCommon, world)
-{
-	mHealth = 0;
-	mDamage = 0;
-	mSpeed = 0;
-	mStamina = 0;
-	mXP = 0;
-	mCargoLimit = 0;
-}
-
-Player::Player(std::string modelPath, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath)
+Player::Player(std::string modelPath, PhysicsManager* physicsManager, Vector3 position, int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP) : Character(modelPath, physicsManager, position, mHealth, mDamage, mSpeed)
 {
 	this->mHealth = mHealth;
 	this->mDamage = mDamage;
@@ -49,7 +41,8 @@ void Player::start()
 }
 void Player::update()
 {
-	transform.setPosition(Vector3(transform.getPosition().x + 0.001f, transform.getPosition().y, transform.getPosition().z));
+	//transform.setPosition(Vector3(transform.getPosition().x + 0.001f, transform.getPosition().y, transform.getPosition().z));
+	//body->setTransform((Vector3(body->getTransform().getPosition().x, body->getTransform().getPosition().y, body->getTransform().getPosition().z), Transform::identity()));
 	
 }
 //
