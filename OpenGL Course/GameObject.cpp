@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType)
+GameObject::GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 collisionSize)
 {
 	model.LoadModel(modelPath);
 	//TODO this should go on first render.
@@ -9,10 +9,12 @@ GameObject::GameObject(std::string modelPath, PhysicsManager* physicsManager, Bo
 	//body->setTransform(Transform(position, Quaternion::identity()));
 	//body->enableGravity(true);
 	body->setType(bodyType);
-	body->addCollider(physicsManager->createBoxShape(Vector3(5, 5, 5)), Transform::identity());
+	body->addCollider(physicsManager->createBoxShape(collisionSize), Transform::identity());
+	
+	//body->updateMassFromColliders();
 }
 
-GameObject::GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position) : GameObject(modelPath, physicsManager, bodyType)
+GameObject::GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType,Vector3 collisionSize, Vector3 position) : GameObject(modelPath, physicsManager, bodyType, collisionSize)
 {
 	Transform transform(Vector3(position), Quaternion::identity());
 	body->setTransform(transform);
@@ -33,6 +35,13 @@ void GameObject::render()
 Transform GameObject::getTransform()
 {
 	return body->getTransform();
+	
+}
+
+
+RigidBody* GameObject::getRigidBody()
+{
+	return body;
 }
 
 void GameObject::setTransform(Transform transform)

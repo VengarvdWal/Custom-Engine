@@ -71,6 +71,11 @@ glm::vec3 Camera::getCameraPosition()
 {
 	return position;
 }
+
+void Camera::setCameraPosition(glm::vec3 cPosition)
+{
+	position = cPosition;
+}
 glm::vec3 Camera::getCameraDirection()
 {
 	return glm::normalize(front);

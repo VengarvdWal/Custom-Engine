@@ -7,6 +7,7 @@ private:
 
 	rp3d::PhysicsWorld* world;
 	rp3d::PhysicsCommon common;
+	
 
 public:
 

@@ -4,7 +4,7 @@
 
 PhysicsManager::PhysicsManager()
 {
-	world = common.createPhysicsWorld();
+	world = common.createPhysicsWorld();	
 }
 
 PhysicsManager::~PhysicsManager()
@@ -15,6 +15,7 @@ void PhysicsManager::update(const float timeStep)
 {
 	world->update(timeStep);
 }
+
 
 rp3d::RigidBody *PhysicsManager::createRigidBody(rp3d::Transform transform)
 {

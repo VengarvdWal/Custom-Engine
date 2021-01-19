@@ -20,9 +20,9 @@ private:
 public:
 	//Keeping the transform public since it will be changed all the time from many different places.
 	
-	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType);
+	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 collisionSize);
 
-	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 position);
+	GameObject(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 collisionSize, Vector3 position);
 
 	~GameObject();
 
@@ -38,6 +38,8 @@ public:
 	void render();
 
 	Transform getTransform();
+
+	RigidBody* getRigidBody();
 		
 	void setTransform(Transform transform);
 

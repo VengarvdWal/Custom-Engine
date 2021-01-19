@@ -38,6 +38,9 @@ private:
 		uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
 
 	Camera camera;
+	std::shared_ptr<Player> player;
+	
+	const float toRadians = 3.14159265f / 180.0f;
 
 	std::vector<Shader*> shaderList;
 	Shader directionalShadowShader;

@@ -44,7 +44,9 @@ void Game::Init()
 	spotLights[1] = SpotLight(1024, 1024, 0.1f, 100.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.5f, 0.0f, -100.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 20.0f);
 	spotLightCount++;
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+	player = std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(2.25, 0.5, 1.75), Vector3(-2.5, 10, 0), 20, 20, 250, 50, 100, 0);
+	camera = Camera(glm::vec3(-5.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
@@ -57,13 +59,16 @@ void Game::Init()
 	skybox = Skybox(skyboxFaces);
 	
 
-	AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", physicsManager.get(), BodyType::STATIC,Vector3(0.0, 5.5, 0.0)));
-	AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
-	AddGameObject(std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC,Vector3(5.0, -0.35, 0.0)));
-	AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(0.0, -0.35, 0.0)));
-	//AddGameObject(std::make_shared<GameObject>("Models/Plantain.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
-	//AddGameObject(new GameObject("Models/ant.obj", Vector3(5.0f, 0.0f, 0.0f)));
+	//AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", physicsManager.get(), BodyType::STATIC,Vector3(0.0, 5.5, 0.0)));
+	//AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
 
+	AddGameObject(std::make_shared<GameObject>("Models/Plane.obj", physicsManager.get(), BodyType::STATIC, Vector3(10, 0.05, 10), Vector3(0, 0, 0)));
+	AddGameObject(std::make_shared<GameObject>("Models/Cube.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.5, 1.5, 0.5), Vector3(0, 1.5, 0)));
+	AddGameObject(player);
+	//AddGameObject(std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC,Vector3(2.25, 0.2, 1.75), Vector3(-2.5, 10, 0)));	
+	//AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(3, 1, 2), Vector3(3, 10, 0)));
+	//AddGameObject(std::make_shared<GameObject>("Models/Plantain.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
+	
 	CreateShaders();
 }
 
@@ -117,11 +122,13 @@ void Game::RenderScene()
 		//matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
 		//std::cout << "Render Position Object " << i << " " << gameObjects[i]->transform.getPosition().x << " " << gameObjects[i]->transform.getPosition().y << " " << gameObjects[i]->transform.getPosition().z << std::endl;
 		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->getTransform().getPosition().x, gameObjects[i]->getTransform().getPosition().y, gameObjects[i]->getTransform().getPosition().z));
-		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));
+		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));		
 		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
 		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		gameObjects[i]->render();
+
+		
 	}
 }
 
@@ -156,11 +163,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	mainLight.GetShadowMap()->Read(GL_TEXTURE2);
 	objectShader.SetTexture(1);
 	objectShader.SetDirectionalShadowMap(2);
-
-	/*glm::vec3 lowerLight = camera.getCameraPosition();
-	lowerLight.y -= 0.3f;
-	spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());*/
-
+		
 	objectShader.Validate();
 	RenderScene();
 }
@@ -201,15 +204,12 @@ void Game::Run()
 
 		// Get + Handle User Input
 		glfwPollEvents();
-
-		camera.keyControl(mainWindow->getsKeys(), deltaTime);
+		
+		//camera.keyControl(mainWindow->getsKeys(), deltaTime);
 		camera.mouseControl(mainWindow->getXChange(), mainWindow->getYChange());
-
-		/*if (mainWindow->getsKeys()[GLFW_KEY_L])
-		{
-			spotLights[0].Toggle();
-			mainWindow->getsKeys()[GLFW_KEY_L] = false;
-		}*/
+		player->Movement(mainWindow->getsKeys(), deltaTime);
+		player->LookDirection(camera.getCameraDirection());
+		camera.setCameraPosition(glm::vec3(-5.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
 
 		DirectionalShadowMapPass(&mainLight);
 		for (size_t i = 0; i < pointLightCount; i++)
