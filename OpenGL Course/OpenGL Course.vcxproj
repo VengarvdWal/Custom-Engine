@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../../External Libs/GLFW/include;$(SolutionDir)/../../External Libs/GLEW/include;$(SolutionDir)/../../External Libs/GLM;$(SolutionDir)/../../External Libs/ASSIMP/include;$(SolutionDir)/../../External Libs/REACT/include</AdditionalIncludeDirectories>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
     </ClCompile>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../../External Libs/GLFW/include;$(SolutionDir)/../../External Libs/GLEW/include;$(SolutionDir)/../../External Libs/GLM;$(SolutionDir)/../../External Libs/ASSIMP/include;$(SolutionDir)/../../External Libs/REACT/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>

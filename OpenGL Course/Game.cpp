@@ -58,7 +58,6 @@ void Game::Init()
 
 	skybox = Skybox(skyboxFaces);
 	
-
 	//AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", physicsManager.get(), BodyType::STATIC,Vector3(0.0, 5.5, 0.0)));
 	//AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
 
