@@ -8,6 +8,7 @@ Enemy::Enemy(std::string modelPath, PhysicsManager* physicsManager, BodyType bod
 	FOV = 0;
 }
 
+
 Enemy::Enemy(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 collisionSize, Vector3 position) : Character(modelPath, physicsManager, bodyType, collisionSize ,position)
 {
 	mHealth = 0;

@@ -1,7 +1,5 @@
 #include "Game.h"
 
-//TODO: Declare all the functions and fill up with copy/pasted code from main.cpp
-
 
 void Game::CreateShaders()
 {
@@ -44,17 +42,17 @@ void Game::Init()
 	spotLights[1] = SpotLight(1024, 1024, 0.1f, 100.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.5f, 0.0f, -100.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 20.0f);
 	spotLightCount++;
 
-	player = std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(2.25, 0.5, 1.75), Vector3(-2.5, 10, 0), 20, 20, 250, 50, 100, 0);
-	camera = Camera(glm::vec3(-5.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+	//player = std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(2.25, 0.5, 1.75), Vector3(-2.5, 10, 0), 20, 20, 500, 50, 100, 0);
+	camera = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 
 
 	std::vector<std::string> skyboxFaces;
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_up.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_dn.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_bk.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudLeft.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudRight.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudTop.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudBottom.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudFront.tga");
+	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudBack.tga");
 
 	skybox = Skybox(skyboxFaces);
 	
@@ -62,11 +60,12 @@ void Game::Init()
 	//AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
 
 	AddGameObject(std::make_shared<GameObject>("Models/Plane.obj", physicsManager.get(), BodyType::STATIC, Vector3(10, 0.05, 10), Vector3(0, 0, 0)));
-	AddGameObject(std::make_shared<GameObject>("Models/Cube.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.5, 1.5, 0.5), Vector3(0, 1.5, 0)));
-	AddGameObject(player);
+	AddGameObject(std::make_shared<GameObject>("Models/igloo.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.025, 0.5, 0.025), Vector3(0, 0, 0)));
+	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.025, 0.5, 0.025), Vector3(1.5, 0, 1.5)));
+	AddGameObject(std::make_shared<GameObject>("Models/snowman.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 0.5, 0.0), Vector3(-1.5, 0, -1.5)));
+	//AddGameObject(player);
 	//AddGameObject(std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC,Vector3(2.25, 0.2, 1.75), Vector3(-2.5, 10, 0)));	
 	//AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(3, 1, 2), Vector3(3, 10, 0)));
-	//AddGameObject(std::make_shared<GameObject>("Models/Plantain.obj", Vector3(0.0, -0.35, 0.0), physicsCommon, world));
 	
 	CreateShaders();
 }
@@ -162,7 +161,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	mainLight.GetShadowMap()->Read(GL_TEXTURE2);
 	objectShader.SetTexture(1);
 	objectShader.SetDirectionalShadowMap(2);
-		
+	
 	objectShader.Validate();
 	RenderScene();
 }
@@ -204,11 +203,11 @@ void Game::Run()
 		// Get + Handle User Input
 		glfwPollEvents();
 		
-		//camera.keyControl(mainWindow->getsKeys(), deltaTime);
+		camera.keyControl(mainWindow->getsKeys(), deltaTime);
 		camera.mouseControl(mainWindow->getXChange(), mainWindow->getYChange());
-		player->Movement(mainWindow->getsKeys(), deltaTime);
-		player->LookDirection(camera.getCameraDirection());
-		camera.setCameraPosition(glm::vec3(-5.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
+		//player->Movement(mainWindow->getsKeys(), deltaTime, camera.getCameraDirection());
+		//player->LookDirection(camera.getCameraDirection());
+		//camera.setCameraPosition(glm::vec3(0.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
 
 		DirectionalShadowMapPass(&mainLight);
 		for (size_t i = 0; i < pointLightCount; i++)

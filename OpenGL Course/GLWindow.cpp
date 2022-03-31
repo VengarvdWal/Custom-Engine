@@ -51,10 +51,10 @@ int GLWindow::Initialise()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	//
-	mainWindow = glfwCreateWindow(width, height, "Ant Stranding", glfwGetPrimaryMonitor(), NULL);
+	mainWindow = glfwCreateWindow(width, height, "Winter World", glfwGetPrimaryMonitor(), NULL);
 	if (!mainWindow)
 	{
-		printf("GLFW windos creation failed!");
+		printf("GLFW window creation failed!");
 		glfwTerminate();
 		return 1;
 	}

@@ -45,38 +45,44 @@ void Player::update()
 	
 }
 
-void Player::Movement(bool* keys, GLfloat deltaTime)
+void Player::Movement(bool* keys, GLfloat deltaTime, glm::vec3 cameraDirection)
 {	
 
 	if (keys[GLFW_KEY_W])
 	{
-		horizontal = 1;		
-	}
+		horizontal = 1;	
+	}	
 
 	if (keys[GLFW_KEY_S])
 	{
 		horizontal = -1;		
 	}
+	if (!keys[GLFW_KEY_W] && !keys[GLFW_KEY_S])
+	{
+		horizontal = 0;
+	}
 
 	if (keys[GLFW_KEY_A])
 	{
 		vertical = -1;		
-	}
+	}	
 
 	if (keys[GLFW_KEY_D])
 	{
 		vertical = 1;		
 	}
-
-	if (!keys[GLFW_KEY_W] && !keys[GLFW_KEY_S] && !keys[GLFW_KEY_A] && !keys[GLFW_KEY_D])
+	if (!keys[GLFW_KEY_A] && !keys[GLFW_KEY_D])
 	{
 		vertical = 0;
-		horizontal = 0;
 	}
-	
+
+	Vector3 direction = Vector3(cameraDirection.x, 0, cameraDirection.y);
+		
 	Transform transform = Player::getTransform();
 	transform.getPosition();
+	body->setLinearDamping(0.60f);
 	body->applyForceToCenterOfMass(Vector3(horizontal * mSpeed * deltaTime, 0 ,vertical * mSpeed * deltaTime));
+	
 }
 
 void Player::LookDirection(glm::vec3 lookDirection)

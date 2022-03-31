@@ -13,7 +13,7 @@ PhysicsManager::~PhysicsManager()
 
 void PhysicsManager::update(const float timeStep)
 {
-	world->update(timeStep);
+	world->update(timeStep);	
 }
 
 

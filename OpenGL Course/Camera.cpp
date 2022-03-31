@@ -49,14 +49,14 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 	yaw += xChange;
 	pitch += yChange;
 
-	if (pitch > 89.0f)
+	if (pitch > 80.0f)
 	{
-		pitch = 89.0f;
+		pitch = 80.0f;
 	}
 
-	if (pitch < -89.0f)
+	if (pitch < -80.0f)
 	{
-		pitch = -89.0f;
+		pitch = -80.0f;
 	}
 
 	update();
@@ -76,6 +76,7 @@ void Camera::setCameraPosition(glm::vec3 cPosition)
 {
 	position = cPosition;
 }
+
 glm::vec3 Camera::getCameraDirection()
 {
 	return glm::normalize(front);
@@ -87,6 +88,7 @@ void Camera::update()
 	front.y = sin(glm::radians(pitch));
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front = glm::normalize(front);
+	position.y = 1;
 
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));

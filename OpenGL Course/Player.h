@@ -22,7 +22,7 @@ public:
 
 	void update();
 
-	void Movement(bool* keys, GLfloat deltaTime);
+	void Movement(bool* keys, GLfloat deltaTime, glm::vec3 cameraDirection);
 
 	void LookDirection(glm::vec3 lookDirection);	
 		
