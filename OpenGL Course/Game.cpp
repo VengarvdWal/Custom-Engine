@@ -24,6 +24,9 @@ void Game::Init()
 	shinyMaterial = RenderMaterial(1.0f, 32);
 	dullMaterial = RenderMaterial(0.3f, 4);
 
+	plainTexture = Texture("Textures/plain.png");
+	plainTexture.LoadTextureA();
+
 #pragma region Lights Init
 
 	mainLight = DirectionalLight(2048, 2048, 1.0f, 1.0f, 1.0f, 0.5f, 0.25f, 0.0f, -15.0f, -10.0f);
@@ -60,7 +63,6 @@ void Game::Init()
 	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(7.5, 0, 9.5)));
 	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-7.5, 0, 9.5)));
 	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-8.75, 0, 8.75)));
-
 	AddGameObject(std::make_shared<GameObject>("Models/snowman.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-1.5, 0, -1.5)));
 #pragma endregion
 
