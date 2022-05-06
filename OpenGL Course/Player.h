@@ -14,7 +14,6 @@ public:
 
 	Player(std::string modelPath, PhysicsManager* physicsManager, BodyType bodyType, Vector3 collisionSize, Vector3 position , int mHealth, int mDamage, int mSpeed, int mStamina, int mCargoLimit, int mXP);
 
-	//Player(const Player&) = delete;
 
 	~Player();
 

@@ -16,6 +16,11 @@ void PhysicsManager::update(const float timeStep)
 	world->update(timeStep);	
 }
 
+void PhysicsManager::DestroyGameObject(rp3d::RigidBody* body)
+{
+	world->destroyRigidBody(body);
+}
+
 
 rp3d::RigidBody *PhysicsManager::createRigidBody(rp3d::Transform transform)
 {

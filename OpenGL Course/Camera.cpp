@@ -72,14 +72,20 @@ glm::vec3 Camera::getCameraPosition()
 	return position;
 }
 
+Vector3 Camera::getCameraPosition3D()
+{
+	return Vector3(position.x, position.y, position.z);
+}
+
 void Camera::setCameraPosition(glm::vec3 cPosition)
 {
 	position = cPosition;
 }
 
-glm::vec3 Camera::getCameraDirection()
+Vector3 Camera::getCameraDirection()
 {
-	return glm::normalize(front);
+	Vector3 front3D(front.x, front.y, front.z);
+	return front3D;
 }
 
 void Camera::update()
