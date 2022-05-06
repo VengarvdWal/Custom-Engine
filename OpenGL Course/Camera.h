@@ -4,8 +4,10 @@
 
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <reactphysics3d/mathematics/Vector3.h>
 
 #include <GLFW\glfw3.h>
+using namespace reactphysics3d;
 
 class Camera
 {
@@ -17,8 +19,9 @@ public:
 	void mouseControl(GLfloat xChange, GLfloat yChange);
 
 	glm::vec3 getCameraPosition();
+	Vector3 getCameraPosition3D();
 	void setCameraPosition(glm::vec3 cPosition);
-	glm::vec3 getCameraDirection();
+	Vector3 getCameraDirection();
 
 	glm::mat4 calculateViewMatrix();
 
