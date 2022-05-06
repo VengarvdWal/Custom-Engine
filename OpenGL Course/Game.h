@@ -20,9 +20,6 @@
 #include "RenderMaterial.h"
 #include "Model.h"
 #include "Skybox.h"
-
-#include "Player.h"
-#include "Enemy.h"
 #include "Shaders.h"
 #include "PhysicsManager.h"
 
@@ -36,8 +33,7 @@ private:
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0, uniformOmniLightPos = 0, uniformFarPlane = 0;
 
-	Camera camera;
-	std::shared_ptr<Player> player;
+	Camera camera;	
 	std::shared_ptr<GameObject> ThrowableSnowball;
 	std::shared_ptr<GameObject> currentSnowball;
 	const float toRadians = 3.14159265f / 180.0f;
