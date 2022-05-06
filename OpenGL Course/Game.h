@@ -29,8 +29,9 @@
 using namespace reactphysics3d;
 
 class Game {
-private:	
-	
+private:
+	//TODO: Add all necessary variables here
+	//This vector will hold all the games entities just like the hierarchy in Unity.
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
@@ -38,11 +39,9 @@ private:
 
 	Camera camera;
 	std::shared_ptr<Player> player;
-	std::shared_ptr<GameObject> ThrowableSnowball;
-	std::shared_ptr<GameObject> currentSnowball;
+	
 	const float toRadians = 3.14159265f / 180.0f;
 
-	Vector3 offset = Vector3(0, -0.25f, 0);
 	std::vector<Shader*> shaderList;
 	Shader directionalShadowShader;
 	Shader omniShadowShader;
@@ -74,7 +73,6 @@ private:
 
 	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
-	float snowballLastTime = 0;
 
 	void CreateShaders();
 	void RenderScene();
@@ -82,11 +80,8 @@ private:
 	void OmniShadowMapPass(PointLight* light);
 	void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
 	void AddGameObject(std::shared_ptr<GameObject> entity);
-
-	void RemoveGameObject(std::shared_ptr<GameObject> go);
-	
-	void HandleMouse(GLFWwindow* window, int button, int action, int mods);
-
+	//Don't forget to remove memory of gameObject
+	void RemoveGameObject();
 
 public:
 	//Game receives the window to be able to check for window closing and events on the loop.

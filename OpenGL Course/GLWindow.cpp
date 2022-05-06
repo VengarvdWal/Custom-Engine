@@ -92,7 +92,6 @@ void GLWindow::createCallBack()
 {
 	glfwSetKeyCallback(mainWindow, handleKeys);
 	glfwSetCursorPosCallback(mainWindow, handleMouse);
-	glfwSetMouseButtonCallback(mainWindow, handleClick);
 }
 
 GLfloat GLWindow::getXChange()
@@ -128,19 +127,6 @@ void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int
 		{
 			currentWindow->keys[key] = false;
 		}
-	}
-}
-
-void GLWindow::handleClick(GLFWwindow* window, int button, int action, int mods)
-{
-	GLWindow* currentWindow = static_cast<GLWindow*>(glfwGetWindowUserPointer(window));
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-	{
-		currentWindow->mouseClicked = true;
-	}
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-	{
-		currentWindow->mouseClicked = false;
 	}
 }
 

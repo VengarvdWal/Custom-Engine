@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 void Game::CreateShaders()
 {
 	objectShader = Shader();
@@ -20,11 +21,15 @@ void Game::Init()
 {
 	physicsManager = std::make_unique<PhysicsManager>();
 
-	camera = Camera(glm::vec3(4.0f, 2.0f, 4.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+	brickTexture = Texture("Textures/brick.png");
+	brickTexture.LoadTextureA();
+	dirtTexture = Texture("Textures/dirt.png");
+	dirtTexture.LoadTextureA();
+	plainTexture = Texture("Textures/plain.png");
+	plainTexture.LoadTextureA();
+
 	shinyMaterial = RenderMaterial(1.0f, 32);
 	dullMaterial = RenderMaterial(0.3f, 4);
-
-#pragma region Lights Init
 
 	mainLight = DirectionalLight(2048, 2048, 1.0f, 1.0f, 1.0f, 0.5f, 0.25f, 0.0f, -15.0f, -10.0f);
 	pointLights[0] = PointLight(1024, 1024, 0.1f, 100.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.4f, -2.0f, 2.0f, 0.0f, 0.3f, 0.01f, 0.01f);
@@ -36,9 +41,10 @@ void Game::Init()
 	spotLightCount++;
 	spotLights[1] = SpotLight(1024, 1024, 0.1f, 100.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.5f, 0.0f, -100.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 20.0f);
 	spotLightCount++;
-#pragma endregion
 
-#pragma region Skybox Init
+	//player = std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(2.25, 0.5, 1.75), Vector3(-2.5, 10, 0), 20, 20, 500, 50, 100, 0);
+	camera = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudLeft.tga");
@@ -47,23 +53,20 @@ void Game::Init()
 	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudBottom.tga");
 	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudFront.tga");
 	skyboxFaces.push_back("Textures/Skybox/CosmicCoolCloudBack.tga");
-	skybox = Skybox(skyboxFaces);
-#pragma endregion
 
-#pragma region GameObjects Init
+	skybox = Skybox(skyboxFaces);
+	
+	//AddGameObject(std::make_shared<GameObject>("Models/Ground.obj", physicsManager.get(), BodyType::STATIC,Vector3(0.0, 5.5, 0.0)));
+	//AddGameObject(std::make_shared<GameObject>("Models/Ant Hill.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 5.5, 0.0)));
 
 	AddGameObject(std::make_shared<GameObject>("Models/Plane.obj", physicsManager.get(), BodyType::STATIC, Vector3(10, 0.05, 10), Vector3(0, 0, 0)));
-	AddGameObject(std::make_shared<GameObject>("Models/Target.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(5, 2, 5)));
-	AddGameObject(std::make_shared<GameObject>("Models/igloo.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(0, 0, 0)));
-	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(1.5, 0, 1.5)));
-	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(8.75, 0, 8.75)));
-	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(7.5, 0, 9.5)));
-	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-7.5, 0, 9.5)));
-	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-8.75, 0, 8.75)));
-
-	AddGameObject(std::make_shared<GameObject>("Models/snowman.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.8, 2, 0.8), Vector3(-1.5, 0, -1.5)));
-#pragma endregion
-
+	AddGameObject(std::make_shared<GameObject>("Models/igloo.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.025, 0.5, 0.025), Vector3(0, 0, 0)));
+	AddGameObject(std::make_shared<GameObject>("Models/tree.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.025, 0.5, 0.025), Vector3(1.5, 0, 1.5)));
+	AddGameObject(std::make_shared<GameObject>("Models/snowman.obj", physicsManager.get(), BodyType::STATIC, Vector3(0.0, 0.5, 0.0), Vector3(-1.5, 0, -1.5)));
+	//AddGameObject(player);
+	//AddGameObject(std::make_shared<Player>("Models/ant.obj", physicsManager.get(), BodyType::DYNAMIC,Vector3(2.25, 0.2, 1.75), Vector3(-2.5, 10, 0)));	
+	//AddGameObject(std::make_shared<Enemy>("Models/Spiders.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(3, 1, 2), Vector3(3, 10, 0)));
+	
 	CreateShaders();
 }
 
@@ -114,11 +117,16 @@ void Game::RenderScene()
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		matrix = glm::mat4(1.0f);
+		//matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->transform.getPosition().x, gameObjects[i]->transform.getPosition().y, gameObjects[i]->transform.getPosition().z));
+		//std::cout << "Render Position Object " << i << " " << gameObjects[i]->transform.getPosition().x << " " << gameObjects[i]->transform.getPosition().y << " " << gameObjects[i]->transform.getPosition().z << std::endl;
 		matrix = glm::translate(matrix, glm::vec3(gameObjects[i]->getTransform().getPosition().x, gameObjects[i]->getTransform().getPosition().y, gameObjects[i]->getTransform().getPosition().z));
-
+		//matrix = glm::scale(matrix, glm::vec3(1.0f, 1.0f, 1.0f));		
+		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(matrix));
 		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		gameObjects[i]->render();
+
+		
 	}
 }
 
@@ -153,7 +161,7 @@ void Game::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	mainLight.GetShadowMap()->Read(GL_TEXTURE2);
 	objectShader.SetTexture(1);
 	objectShader.SetDirectionalShadowMap(2);
-
+	
 	objectShader.Validate();
 	RenderScene();
 }
@@ -163,9 +171,9 @@ void Game::AddGameObject(std::shared_ptr<GameObject> go)
 	gameObjects.push_back(go);
 }
 
-void Game::RemoveGameObject(std::shared_ptr<GameObject> go)
+void Game::RemoveGameObject()
 {
-	physicsManager->DestroyGameObject(go->getRigidBody());
+	//Don't forget to remove memory of gameObject
 }
 
 void Game::Run()
@@ -178,7 +186,7 @@ void Game::Run()
 		lastTime = now;
 
 		const float timeStep = 1.0f / 60.0f;
-
+				
 		// Add the time difference in the accumulator
 		accumulator += deltaTime;
 		// While there is enough accumulated time to take
@@ -194,26 +202,12 @@ void Game::Run()
 
 		// Get + Handle User Input
 		glfwPollEvents();
-
+		
 		camera.keyControl(mainWindow->getsKeys(), deltaTime);
 		camera.mouseControl(mainWindow->getXChange(), mainWindow->getYChange());
-
-		float currentTime = glfwGetTime();
-		const float cooldown = 0.5;
-
-		if (mainWindow->getClick())
-		{
-			if (currentTime - snowballLastTime >= cooldown)
-			{
-				ThrowableSnowball = std::make_shared<GameObject>("Models/Snowball.obj", physicsManager.get(), BodyType::DYNAMIC, Vector3(0.05, 0.05, 0.05),
-					Vector3(camera.getCameraPosition3D() + offset));
-
-				currentSnowball = ThrowableSnowball;
-				AddGameObject(currentSnowball);
-				currentSnowball->moveControl(mainWindow->getClick(), camera.getCameraDirection());
-				snowballLastTime = currentTime;
-			}
-		}
+		//player->Movement(mainWindow->getsKeys(), deltaTime, camera.getCameraDirection());
+		//player->LookDirection(camera.getCameraDirection());
+		//camera.setCameraPosition(glm::vec3(0.0f, 2.0f, 0.0f) + glm::vec3(player->getTransform().getPosition().x, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
 
 		DirectionalShadowMapPass(&mainLight);
 		for (size_t i = 0; i < pointLightCount; i++)
